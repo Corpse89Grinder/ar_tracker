@@ -1,0 +1,28 @@
+<launch>
+  <node pkg="tf" type="static_transform_publisher" name="world_to_cam" 
+    args="0 0 0.5 -1.57 0 -1.57 world camera 10" />
+  <node ns="camera" pkg="image_proc" type="image_proc" name="image_proc"/>
+  <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen" >
+    <param name="video_device" value="/dev/video0" />
+    <param name="image_width" value="640" />
+    <param name="image_height" value="480" />
+    <param name="pixel_format" value="mjpeg" />
+    <param name="camera_frame_id" value="camera" />
+    <param name="camera_info_url" value="/.ros/camera_info/camera.yaml" />
+    <param name="io_method" value="mmap"/>
+    <remap from="/usb_cam/" to="/camera"/>
+  </node>
+  <node name="ar_pose" pkg="ar_pose" type="ar_single" respawn="false"
+    output="screen">
+    <param name="marker_pattern" type="string"
+      value="$(find ar_pose)/data/4x4/4x4_1.patt"/>
+    <param name="marker_width" type="double" value="152.4"/>
+    <param name="marker_center_x" type="double" value="0.0"/>
+    <param name="marker_center_y" type="double" value="0.0"/>
+    <param name="threshold" type="int" value="100"/>
+    <param name="use_history" type="bool" value="true"/>
+  </node>
+  <node name="turtlesim" pkg="turtlesim" type="turtlesim_node" />
+  <node name="turtle_auto_teleop" pkg="turtle_auto_teleop" type="turtle_auto_teleop" />
+  <node name="ar_tracker" pkg="ar_tracker" type="ar_tracker" />
+</launch>
