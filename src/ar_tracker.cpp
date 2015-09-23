@@ -1,12 +1,10 @@
 #include <ros/ros.h>
-#include <opencv2/opencv.hpp>
 #include <geometry_msgs/Twist.h>
 #include <ar_pose/ARMarker.h>
 
 void markerCallback(ar_pose::ARMarker marker);
 void commandsCallback(geometry_msgs::Twist twist);
 
-double ticks = 0;
 bool printed = false;
 
 int sequence = -1;
