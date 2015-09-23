@@ -10,7 +10,6 @@ bool printed = false;
 int sequence = -1;
 int currentSequence = sequence;
 
-double distance;
 double ratio;
 
 int counter = 15;
@@ -41,7 +40,7 @@ int main(int argc, char** argv)
 
 void markerCallback(ar_pose::ARMarker marker)
 {
-	distance = marker.pose.pose.position.z - 0.50;
+	double distance = marker.pose.pose.position.z - 0.50;
 
 	if(distance >= 0 && distance <= 1)
 	{
