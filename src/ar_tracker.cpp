@@ -43,7 +43,7 @@ int main(int argc, char** argv)
 
 void markerCallback(ar_pose::ARMarker marker)
 {
-	distance = marker.pose.pose.position.z;
+	distance = marker.pose.pose.position.z - 0.50;
 	ratio = (2 - distance) / 2;
 
 	if(ratio < 0)
@@ -69,9 +69,6 @@ void commandsCallback(geometry_msgs::Twist received)
 	if(currentSequence == sequence)
 	{
 		counter++;
-
-		twist.linear.x = received.linear.x * ratio / counter;
-		twist.angular.z = received.angular.z * ratio / counter;
 	}
 	else
 	{
