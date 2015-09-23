@@ -42,11 +42,27 @@ int main(int argc, char** argv)
 void markerCallback(ar_pose::ARMarker marker)
 {
 	distance = marker.pose.pose.position.z - 0.50;
-	ratio = (2 - distance) / 2;
+
+	if(distance >= 0 && distance <= 1)
+	{
+		ratio = 1;
+	}
+	else if(distance > 1 && distance <= 2)
+	{
+		ratio = 1 - (distance - 1);
+	}
+	else if(distance > 2)
+	{
+		ratio = 0;
+	}
 
 	if(ratio < 0)
 	{
 		ratio = 0;
+	}
+	else if(ratio > 1)
+	{
+		ratio = 1;
 	}
 
 	currentSequence = marker.header.seq;
